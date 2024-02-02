@@ -6,6 +6,7 @@ package weatherapi
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -22,10 +23,10 @@ func NewHistoryRequest(lat float64, lng float64, time time.Time) historyRequest 
 		}
 }
 
-func DoHistoryRequest(apiKey string, request historyRequest) (weatherApiResponse, error) {
+func DoHistoryRequest(apiKey string, request historyRequest) (WeatherApiResponse, error) {
 	req, err := http.NewRequest("GET", "https://api.weatherapi.com/v1/history.json", nil)
 	if err != nil {
-		return weatherApiResponse{}, err
+		return WeatherApiResponse{}, err
 	}
 
 	query := req.URL.Query()
@@ -37,14 +38,18 @@ func DoHistoryRequest(apiKey string, request historyRequest) (weatherApiResponse
 
 	rawResp, err := client.Do(req)
 	if err != nil {
-		return weatherApiResponse{}, err
+		return WeatherApiResponse{}, err
 	}
 	defer rawResp.Body.Close()
 
-	var resp weatherApiResponse
+	if rawResp.StatusCode != 200 {
+		return WeatherApiResponse{}, errors.New(rawResp.Status)
+	}
+
+	var resp WeatherApiResponse
 	err = json.NewDecoder(rawResp.Body).Decode(&resp)
 	if err != nil {
-		return weatherApiResponse{}, err
+		return WeatherApiResponse{}, err
 	}
 
 	return resp, nil
