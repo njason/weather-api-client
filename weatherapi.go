@@ -17,10 +17,10 @@ var client = http.Client{
 }
 
 func NewHistoryRequest(lat float64, lng float64, time time.Time) historyRequest {
-		return historyRequest{
-			q: fmt.Sprintf("%f, %f", lat, lng),
-			dt: time.Format("2006-01-02"),
-		}
+	return historyRequest{
+		q:  fmt.Sprintf("%f, %f", lat, lng),
+		dt: time.Format("2006-01-02"),
+	}
 }
 
 func DoHistoryRequest(apiKey string, request historyRequest) (WeatherApiResponse, error) {

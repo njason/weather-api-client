@@ -1,6 +1,6 @@
 package weatherapi
 
 type historyRequest struct {
-	q	string
-	dt	string
+	q  string
+	dt string
 }

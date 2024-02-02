@@ -15,16 +15,17 @@ type TestConfig struct {
 func readApiKeyFile() string {
 	rawApiKey, err := os.ReadFile("apikey.txt")
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	return strings.TrimSpace(string(rawApiKey))
 }
+
 var apiKey = readApiKeyFile()
 
 func TestDoHistoryRequest(t *testing.T) {
 	request := NewHistoryRequest(40.7790, -73.9692, time.Now().UTC())
-	
+
 	_, err := DoHistoryRequest(apiKey, request)
 
 	if err != nil {
