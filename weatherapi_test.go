@@ -8,10 +8,7 @@ import (
 	"time"
 )
 
-type TestConfig struct {
-	WeatherApiKey string `yaml:"weatherApiKey"`
-}
-
+var apiKey = readApiKeyFile()
 func readApiKeyFile() string {
 	rawApiKey, err := os.ReadFile("apikey.txt")
 	if err != nil {
@@ -20,8 +17,6 @@ func readApiKeyFile() string {
 
 	return strings.TrimSpace(string(rawApiKey))
 }
-
-var apiKey = readApiKeyFile()
 
 func TestDoHistoryRequest(t *testing.T) {
 	request := NewHistoryRequest(40.7790, -73.9692, time.Now().UTC())
