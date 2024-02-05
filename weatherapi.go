@@ -42,7 +42,7 @@ func DoHistoryRequest(apiKey string, request historyRequest) (WeatherApiResponse
 	}
 	defer rawResp.Body.Close()
 
-	if rawResp.StatusCode != 200 {
+	if rawResp.StatusCode != http.StatusOK {
 		return WeatherApiResponse{}, errors.New(rawResp.Status)
 	}
 

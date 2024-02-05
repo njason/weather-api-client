@@ -9,6 +9,7 @@ import (
 )
 
 var apiKey = readApiKeyFile()
+
 func readApiKeyFile() string {
 	rawApiKey, err := os.ReadFile("apikey.txt")
 	if err != nil {
